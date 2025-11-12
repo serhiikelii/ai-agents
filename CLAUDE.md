@@ -26,7 +26,7 @@
 | Оптимизация производительности | Performance Optimization Agent | performance, optimization, profiling |
 | Security audit | Security Audit Agent | security, vulnerability, audit |
 | TypeScript архитектура | TypeScript Architecture Agent | typescript, types, architecture |
-| UI/UX дизайн | UIUX Enhancement Agent | ui, ux, interface, usability |
+| UI/UX дизайн | UI/UX Design Agent | ui, ux, interface, usability, design |
 | PWA и мобильная разработка | PWA Mobile Agent | pwa, mobile, offline |
 | Фоновые процессы | Queue Worker Agent | queue, worker, background jobs |
 | Поисковые системы | RAG Agent | rag, search, vector, embeddings |
@@ -174,7 +174,7 @@ else:
 ---
 ## 📁 Структура проекта
 ```
-D:\Automation\Development\projects\ai-agents\
+C:\Users\prose\Automation\ai-agents\
 ├── CLAUDE.md  (этот файл)
 ├── README.md  (описание проекта)
 └── .claude\

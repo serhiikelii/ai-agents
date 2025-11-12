@@ -31,8 +31,8 @@ PM должен уметь:
 15. **RAG Agent** - поисковые системы с векторными БД
 16. **Security Audit Agent** - аудит безопасности
 17. **TypeScript Architecture Agent** - архитектура TypeScript проектов
-18. **UIUX Enhancement Agent** - улучшение интерфейсов
-19. **Pattern Orchestrator Agent** - координация pattern агентов для проекта PatternShift
+18. **UI/UX Design Agent** - дизайн пользовательских интерфейсов
+
 
 ---
 
@@ -62,7 +62,7 @@ task = mcp__archon__find_tasks(task_id="...")
 | "database", "prisma", "migration", "schema" | Prisma Database Agent |
 | "performance", "оптимизация", "скорость" | Performance Optimization Agent |
 | "security", "безопасность", "audit" | Security Audit Agent |
-| "ui", "ux", "интерфейс", "дизайн" | UIUX Enhancement Agent |
+| "ui", "ux", "интерфейс", "дизайн" | UI/UX Design Agent |
 | "typescript", "types", "архитектура TS" | TypeScript Architecture Agent |
 | "pwa", "mobile", "offline" | PWA Mobile Agent |
 | "queue", "worker", "background job" | Queue Worker Agent |
