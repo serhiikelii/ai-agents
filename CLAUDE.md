@@ -2,10 +2,13 @@
 **Наследует:** `C:\Users\prose\Automation\CLAUDE.md`
 ---
 ## 🎯 ОБЯЗАТЕЛЬНО ПРОЧИТАТЬ ПЕРЕД РАБОТОЙ
+**Для ВСЕХ агентов:**
+1. 📚 **`.claude/INDEX.md`** - ЦЕНТРАЛЬНАЯ НАВИГАЦИЯ ПО ВСЕМ ПРАВИЛАМ (начни отсюда!)
+
 **Для Project Manager:**
 1. `.claude/knowledge/common_agent_rules.md` - общие правила для всех агентов
 2. `.claude/agents/project-manager.md` - твой полный системный промпт
-3. `.claude/docs/WORKFLOW_PM_AGENT_LIBRARY_MANAGEMENT.md` - список 19 агентов и workflow
+3. `C:\Users\prose\Automation\ai-agents\.claude\INDEX.md` - список агентов и workflow
 ---
 ## 📋 ПРАВИЛА ДЛЯ PROJECT MANAGER
 ### Матрица делегирования (Core агенты)
@@ -32,8 +35,7 @@
 | Поисковые системы | RAG Agent | rag, search, vector, embeddings |
 | MCP конфигурация | MCP Configuration Agent | mcp, server, configuration |
 | Community management | Community Management Agent | community, moderation, users |
-**Специальная делегация:**
-- **PatternShift проект** → Pattern Orchestrator Agent (управляет 17 pattern агентами)
+
 ---
 ## 🔄 Workflow делегирования задач
 ### ШАГ 1: Получил задачу из Archon
@@ -49,12 +51,9 @@ task = mcp__archon__find_tasks(task_id="...")
 ### ШАГ 3: Проверить библиотеку агентов
 ```
 agents = Glob(pattern="**/*.md", path=".claude/agents/")
-if нужный_агент in agents:
-    # ✅ Агент найден
-else:
-    # ❌ Агента НЕТ → переключиться в Blueprint Architect
+
 ```
-### ШАГ 4а: ЕСЛИ АГЕНТ ЕСТЬ → Делегировать
+### ШАГ 4:АГЕНТ → Делегировать
 ```
 mcp__archon__manage_task("create",
     project_id=current_project_id,
@@ -63,19 +62,6 @@ mcp__archon__manage_task("create",
     description="[Детальное описание с контекстом]",
     status="todo"
 )
-```
-### ШАГ 4б: ЕСЛИ АГЕНТА НЕТ → Создать агента
-```
-🚨 СТОП - агента нет в библиотеке!
-1. Переключиться в роль Blueprint Architect
-   - Найти промпт: Glob(pattern="**/blueprint-architect*.md")
-   - Прочитать системный промпт
-   - Объявить переключение пользователю
-2. Blueprint Architect создает агента:
-   - .claude/agents/[new-agent-name].md (~400-600 строк)
-   - Следуя АРХИТЕКТУРА_НОВАЯ_СИСТЕМА_АГЕНТОВ_ПЛАН.md
-3. Вернуться в роль Project Manager
-4. Делегировать задачу новому агенту
 ```
 ### ШАГ 5: Мониторинг выполнения
 ```
@@ -102,55 +88,8 @@ mcp__archon__manage_task("create", ...)
 - Может блокировать следующие задачи
 **ПРИОРИТЕТ 3:** `todo` (новые задачи)
 - Брать только когда нет doing и review
-**Алгоритм получения следующей задачи:**
-```python
-async def get_next_task(project_id: str) -> dict:
-    # 1. Незавершенная работа (doing)
-    doing_tasks = await mcp__archon__find_tasks(
-        project_id=project_id,
-        filter_by="status",
-        filter_value="doing"
-    )
-    if doing_tasks:
-        return max(doing_tasks, key=lambda t: t["task_order"])
-    # 2. Задачи на ревью (review)
-    review_tasks = await mcp__archon__find_tasks(
-        project_id=project_id,
-        filter_by="status",
-        filter_value="review"
-    )
-    if review_tasks:
-        return max(review_tasks, key=lambda t: t["task_order"])
-    # 3. Новые задачи (todo)
-    todo_tasks = await mcp__archon__find_tasks(
-        project_id=project_id,
-        filter_by="status",
-        filter_value="todo"
-    )
-    if todo_tasks:
-        return max(todo_tasks, key=lambda t: t["task_order"])
-    return None  # Нет задач
-```
+
 ---
-## 🔗 Workflow проверки агента в библиотеке
-**Перед делегированием ВСЕГДА проверять:**
-```python
-# 1. Извлечь ключевое слово из типа задачи
-keywords = extract_keywords(task.description)
-# Примеры: "payment" → Payment Integration Agent
-#         "prisma" → Prisma Database Agent
-# 2. Поиск в библиотеке
-result = Glob(
-    pattern=f"**/{keyword}*agent*.md",
-    path=".claude/agents/"
-)
-if result:
-    agent_found = True
-    agent_file = result[0]
-else:
-    agent_found = False
-    # → Эскалация к Blueprint Architect
-```
 ---
 ## 🚨 Критические правила (для всех агентов)
 1. **TodoWrite обязательно** - 3-7 микрозадач для каждой основной задачи
@@ -166,11 +105,7 @@ else:
    - Прочитать README.md проекта
    - Прочитать последние коммиты: git log --oneline -10
    - Прочитать правила проекта: .claude/rules.md
-5. **Гибкие статусы задач:**
-   - `done` - полностью выполнено без проблем
-   - `review` - выполнено, нужна проверка эксперта
-   - `doing` + эскалация - проблема вне компетенции
-   - `doing` + блокер - внешние факторы блокируют
+
 ---
 ## 📁 Структура проекта
 ```
@@ -178,6 +113,8 @@ C:\Users\prose\Automation\ai-agents\
 ├── CLAUDE.md  (этот файл)
 ├── README.md  (описание проекта)
 └── .claude\
+    ├── INDEX.md         # 📚 ЦЕНТРАЛЬНАЯ НАВИГАЦИЯ (НАЧНИ ОТСЮДА!)
+    │
     ├── agents\          # Библиотека агентов
     │   ├── project-manager.md
     │   ├── blueprint-architect.md
@@ -191,7 +128,5 @@ C:\Users\prose\Automation\ai-agents\
     │   ├── context7_integration.md  (только для code-writing агентов)
     │   └── git_workflow.md  (для агентов с git операциями)
     │
-    └── docs\            # Planning документы
-        ├── WORKFLOW_НОВАЯ_АРХИТЕКТУРА.md
-        └── WORKFLOW_PM_AGENT_LIBRARY_MANAGEMENT.md
+    
 ```

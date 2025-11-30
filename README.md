@@ -29,7 +29,6 @@ AI Agents Library - это коллекция специализированны
 |-------|---------------|------------------|
 | **Project Manager** | Оркестрация задач | Делегирование, приоритизация, координация команды |
 | **Blueprint Architect** | Архитектура систем | Дизайн систем, выбор технологий, создание агентов |
-| **Analysis Lead** | Анализ требований | Декомпозиция задач, исследование, планирование |
 | **Implementation Engineer** | Реализация кода | Программирование, рефакторинг, code review |
 | **Quality Guardian** | Контроль качества | Тестирование, валидация, QA процессы |
 | **Deployment Engineer** | DevOps и развертывание | CI/CD, Docker, Kubernetes, мониторинг |
@@ -39,17 +38,7 @@ AI Agents Library - это коллекция специализированны
 | Агент | Специализация |
 |-------|---------------|
 | **API Development Agent** | REST/GraphQL API разработка |
-| **Security Audit Agent** | Аудит безопасности, OWASP Top 10 |
-| **Payment Integration Agent** | Stripe, PayPal, платежные системы |
-| **Prisma Database Agent** | Работа с БД через Prisma ORM |
-| **Performance Optimization Agent** | Оптимизация производительности |
-| **TypeScript Architecture Agent** | TypeScript архитектура проектов |
-| **UI/UX Enhancement Agent** | Дизайн интерфейсов |
-| **PWA Mobile Agent** | Progressive Web Apps |
-| **Queue Worker Agent** | Фоновые процессы, очереди |
-| **RAG Agent** | Поисковые системы с векторными БД |
-| **MCP Configuration Agent** | Настройка MCP серверов |
-| **Community Management Agent** | Управление сообществом |
+| **UI/UX design Agent** | Дизайн интерфейсов |
 
 ---
 
@@ -65,11 +54,9 @@ ai-agents/
     │   ├── project-manager.md
     │   ├── blueprint-architect.md
     │   ├── implementation-engineer.md
-    │   ├── analysis-lead.md
     │   ├── quality-guardian.md
     │   ├── deployment-engineer.md
     │   ├── api-development-agent.md
-    │   ├── security-audit-agent.md
     │   └── ...
     │
     ├── knowledge/               # Общие правила

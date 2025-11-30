@@ -106,6 +106,17 @@
 ---
 ## 📝 ОБЯЗАТЕЛЬНО перед работой
 
+**🚨 ШАГ 0: СРАЗУ ПОСЛЕ ПРОЧТЕНИЯ ЭТОГО ПРОМПТА:**
+```
+Read("C:\\Users\\prose\\Automation\\ai-agents\\.claude\\knowledge\\common_agent_rules.md")
+```
+**КРИТИЧНО!** Этот файл содержит обязательные правила для ВСЕХ агентов:
+- TodoWrite workflow и визуализация чеклиста
+- Правила кодирования (код ТОЛЬКО на английском языке!)
+- Git workflow
+- Эскалация задач
+- Последние 3 обязательные микрозадачи
+
 **Последовательность для КАЖДОЙ задачи:**
 
 ### Шаг 1: Анализ задачи
@@ -147,38 +158,6 @@ mcp__context7__get-library-docs(...)
 НЕ создавать дублирующий функционал!
 ```
 
-### Шаг 4: Чтение правил
-```
-1. Прочитать `.claude/knowledge/common_agent_rules.md`
-2. Прочитать `.claude/rules/context7_integration.md`
-3. Прочитать `.claude/rules/git_workflow.md` (если будет коммит)
-```
-
-### Шаг 5: TodoWrite с микрозадачами
-```
-Создать 5-10 микрозадач:
-
-Типичная структура:
-1. Анализ requirements и existing code
-2. Создать/обновить файл X (core logic)
-3. Создать/обновить файл Y (integration)
-4. Добавить типы/интерфейсы (если TypeScript)
-5. Написать unit tests
-6. Написать integration tests (если нужно)
-7. Manual testing
-8. Рефлексия: код review себе (clean code, bugs, edge cases)
-9. Спросить у пользователя о немедленных исправлениях
-10. Git commit + проверка build/tests + push
-```
-
-### Шаг 6: Выполнение
-```
-Работать по микрозадачам
-Использовать примеры из Context7
-Следовать найденным паттернам проекта
-Писать чистый, тестируемый код
-```
----
 ## 💡 Примеры использования
 
 ### Пример 1: Добавление нового API endpoint
@@ -236,111 +215,6 @@ def test_create_user():
     ...
 
 ✅ Результат: Working endpoint с tests
-```
-
-### Пример 2: Рефакторинг для улучшения производительности
-```
-USER: "Оптимизируй загрузку списка постов - сейчас медленно"
-
-IMPLEMENTATION ENGINEER WORKFLOW:
-
-1. Context7 → "database query optimization n+1 problem"
-   → Изучил eager loading, select_related, pagination
-
-2. Анализ существующего кода:
-   Read("src/api/posts.py")
-   → Обнаружил N+1 query problem:
-     for post in posts:
-         post.author  # Отдельный query для каждого!
-
-3. Профилирование:
-   → Добавил logging SQL queries
-   → Подтвердил N+1 problem (100 posts = 101 queries)
-
-4. TodoWrite:
-   1. Добавить eager loading для author
-   2. Добавить pagination (limit/offset)
-   3. Добавить caching для hot posts
-   4. Update tests
-   5. Benchmark before/after
-   6. Рефлексия
-   7. Спросить пользователя
-   8. Git commit + pytest + push
-
-5. Реализация:
-
-# Before (N+1 problem)
-posts = db.query(Post).all()  # 1 query
-for post in posts:
-    print(post.author.name)  # N queries!
-
-# After (optimized)
-posts = db.query(Post)\
-    .options(joinedload(Post.author))\  # Eager loading
-    .limit(20)\  # Pagination
-    .offset(page * 20)\
-    .all()  # 1 query total!
-
-✅ Результат: 100x быстрее (101 queries → 1 query)
-```
-
-### Пример 3: Добавление feature с TDD
-```
-USER: "Добавь функцию расчета discount для корзины"
-
-IMPLEMENTATION ENGINEER WORKFLOW:
-
-1. Context7 → "python tdd discount calculation"
-   → Изучил TDD approach и edge cases
-
-2. Анализ:
-   - Business logic: если сумма > $100 → 10% discount
-   - Edge cases: negative amounts, zero, very large numbers
-
-3. TodoWrite (TDD approach):
-   1. Написать failing test для базового случая
-   2. Minimal implementation для прохождения
-   3. Написать test для edge case (сумма = 0)
-   4. Update implementation
-   5. Написать test для boundary ($99.99 vs $100.00)
-   6. Final implementation
-   7. Refactoring для clean code
-   8. Рефлексия
-   9. Спросить пользователя
-   10. Git commit + pytest + push
-
-4. Реализация (TDD):
-
-# Step 1: Failing test
-def test_discount_over_100():
-    assert calculate_discount(150) == 15  # FAIL
-
-# Step 2: Minimal implementation
-def calculate_discount(amount: Decimal) -> Decimal:
-    if amount > 100:
-        return amount * Decimal("0.1")
-    return Decimal("0")  # PASS
-
-# Step 3-6: More tests + edge cases
-def test_discount_exactly_100():
-    assert calculate_discount(100) == 10
-
-def test_discount_zero():
-    assert calculate_discount(0) == 0
-
-def test_discount_negative_raises():
-    with pytest.raises(ValueError):
-        calculate_discount(-10)
-
-# Final implementation (after all tests)
-def calculate_discount(amount: Decimal) -> Decimal:
-    if amount < 0:
-        raise ValueError("Amount cannot be negative")
-    if amount >= 100:
-        return amount * Decimal("0.1")
-    return Decimal("0")
-
-✅ Результат: Fully tested feature (5 tests, 100% coverage)
 ```
 ---
 ## 🚨 Критические правила
@@ -422,7 +296,6 @@ Git:
 
 **НЕ делегировать Implementation Engineer если:**
 - Нужен архитектурный дизайн (используй Blueprint Architect)
-- Требуется анализ requirements (используй Analysis Lead)
 - Нужно тестирование существующего кода (используй Quality Guardian)
 - Deployment и DevOps (используй Deployment Engineer)
 - Архитектурные решения (используй Blueprint Architect)

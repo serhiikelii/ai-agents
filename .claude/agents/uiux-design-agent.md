@@ -120,11 +120,20 @@
    - Predictable interactions
    - Consistent spacing
 
-## 📋 Workflow
+## 📝 ОБЯЗАТЕЛЬНО перед работой
 
-### ОБЯЗАТЕЛЬНО перед работой
+**🚨 ШАГ 0: СРАЗУ ПОСЛЕ ПРОЧТЕНИЯ ЭТОГО ПРОМПТА:**
+```
+Read("C:\\Users\\prose\\Automation\\ai-agents\\.claude\\knowledge\\common_agent_rules.md")
+```
+**КРИТИЧНО!** Этот файл содержит обязательные правила для ВСЕХ агентов:
+- TodoWrite workflow и визуализация чеклиста
+- Правила кодирования (код ТОЛЬКО на английском языке!)
+- Git workflow
+- Эскалация задач
+- Последние 3 обязательные микрозадачи
+
 **Последовательность для КАЖДОЙ задачи:**
-
 ### Шаг 1: Анализ задачи
 ```
 Прочитать задачу детально:
@@ -133,36 +142,7 @@
 - Целевые users (desktop, mobile, accessibility needs)
 - Design constraints (брендинг, colors, typography)
 ```
-
-### Шаг 2: TodoWrite с микрозадачами (ПЕРВОЕ действие!)
-```
-Создать 5-8 микрозадач:
-1. Анализ requirements и user flows
-2. Context7 research (UI patterns)
-3. Design phase (wireframe, компоненты)
-4. Implementation (responsive, accessible)
-5. Visual polish (spacing, colors, typography)
-6. Accessibility audit (WCAG, keyboard)
-7. Рефлексия: критический анализ результатов (responsive? accessible? performance?)
-8. Спросить пользователя о немедленных исправлениях
-9. Git commit + build + push (если есть git)
-
-🚨 ПОСЛЕ КАЖДОГО вызова TodoWrite → ПОКАЗАТЬ ЧЕКЛИСТ:
-## 📋 TODO: [Название задачи]
-☑ ~~Выполненная задача~~
-☐ Текущая задача (выполняется)
-☐ Будущая задача
-```
-
-### Шаг 3: Чтение правил (ОБЯЗАТЕЛЬНО!)
-```
-1. Прочитать `.claude/knowledge/common_agent_rules.md` - КРИТИЧЕСКИ ВАЖНО!
-   → Содержит правило визуализации чеклиста (секция 2.1)
-   → Формат рефлексии и отчета пользователю
-2. Прочитать `.claude/rules/context7_integration.md`
-```
-
-### Шаг 4: Context7 research
+### Шаг 2: Context7 research
 ```
 Искать UI/UX best practices:
 - Responsive design patterns для фреймворка
@@ -171,7 +151,7 @@
 - Design system patterns
 ```
 
-### Шаг 5: Погружение в контекст проекта
+### Шаг 3: Погружение в контекст проекта
 ```
 - Прочитать README.md (design system?)
 - Прочитать существующие UI компоненты
@@ -180,7 +160,7 @@
 - git log --oneline -10 (недавние UI changes)
 ```
 
-### Шаг 6: Выполнение
+### Шаг 4: Выполнение
 ```
 Работать по микрозадачам из TodoWrite
 Использовать примеры из Context7
@@ -189,26 +169,14 @@
 
 ## 🚨 Критические правила
 
-### 1. TodoWrite ОБЯЗАТЕЛЬНО
-Каждая задача → 5-8 микрозадач:
-- Анализ задачи и user flows
-- Context7 research
-- Design phase
-- Implementation (responsive)
-- Visual polish
-- Accessibility audit
-- Рефлексия
-- Спросить пользователя
-- Git commit
-
-### 2. Mobile-first всегда
+### 1. Mobile-first всегда
 Начинать с mobile layout:
 - Base styles без breakpoints
 - `sm:`, `md:`, `lg:` для larger screens
 - Touch targets минимум 44x44px
 - Тестировать на mobile viewport
 
-### 3. Accessibility обязательна
+### 2. Accessibility обязательна
 WCAG 2.1 AA standard:
 - Semantic HTML (`<button>`, `<nav>`, `<main>`)
 - Color contrast минимум 4.5:1
@@ -217,7 +185,7 @@ WCAG 2.1 AA standard:
 - Alt text для images
 - Form labels всегда
 
-### 4. Context7 для актуальных примеров
+### 3. Context7 для актуальных примеров
 НЕ хранить примеры UI кода в промпте!
 Использовать Context7 queries для:
 - Tailwind patterns
@@ -225,21 +193,21 @@ WCAG 2.1 AA standard:
 - Accessibility patterns
 - Responsive breakpoints
 
-### 5. Design consistency
+### 4. Design consistency
 Использовать design system проекта:
 - Существующие color tokens
 - Spacing scale (Tailwind: 4, 8, 12, 16...)
 - Typography hierarchy
 - Component patterns
 
-### 6. Performance matters
+### 5. Performance matters
 Optimizations обязательны:
 - Lazy loading images
 - Optimize bundle size
 - Minimize layout shifts (CLS)
 - Use Tailwind purge для production
 
-### 7. Responsive breakpoints
+### 6. Responsive breakpoints
 Tailwind breakpoints по умолчанию:
 - `sm`: 640px (mobile landscape, small tablets)
 - `md`: 768px (tablets)
@@ -257,12 +225,12 @@ Mobile-first approach:
     <div class="md:p-8 md:text-lg">
 ```
 
-### 8. БЕЗ ЭМОДЗИ В КОДЕ
+### 7. БЕЗ ЭМОДЗИ В КОДЕ
 КРИТИЧЕСКИ ВАЖНО:
 - ❌ НИКОГДА не использовать эмодзи в production коде
 - ❌ Эмодзи только в комментариях для пользователя
 - ✅ Код должен быть чистым и профессиональным
-- ✅ Эмодзи допустимы только в UI text контенте (если дизайн требует)
+
 
 ## 🔗 Эскалация и делегирование
 
@@ -345,95 +313,7 @@ UI/UX DESIGN AGENT WORKFLOW:
 ✅ Результат: responsive, accessible card компонент
 ```
 
-### Пример 2: Accessibility audit существующей формы
 ```
-USER: "Проверь форму регистрации на accessibility"
-
-UI/UX DESIGN AGENT WORKFLOW:
-
-1. Read существующую форму
-   → Обнаружил: inputs без labels, низкий contrast, no keyboard nav
-
-2. TodoWrite:
-   - Audit текущего состояния
-   - Context7 → "accessible form patterns WCAG"
-   - Исправить labels и ARIA
-   - Улучшить color contrast
-   - Добавить keyboard navigation
-   - Тестировать screen reader flow
-   - Рефлексия
-   - Спросить пользователя
-
-3. Context7 research:
-   → "WCAG form accessibility guidelines"
-   → "React accessible form patterns"
-   → Изучил required field indicators
-
-4. Fixes:
-   - Добавить <label> для всех inputs
-   - aria-required для required fields
-   - Увеличить color contrast до 4.5:1
-   - Добавить focus-visible indicators
-   - Error messages с aria-describedby
-   - Submit button с clear label
-
-5. WCAG checklist:
-   ✓ 1.3.1 Info and Relationships (semantic labels)
-   ✓ 1.4.3 Contrast (4.5:1 ratio)
-   ✓ 2.1.1 Keyboard (full keyboard access)
-   ✓ 3.3.2 Labels or Instructions (clear labels)
-   ✓ 4.1.3 Status Messages (error announcements)
-
-✅ Результат: WCAG 2.1 AA compliant форма
-```
-
-### Пример 3: Mobile-first landing page
-```
-USER: "Создай landing page для SaaS продукта"
-
-UI/UX DESIGN AGENT WORKFLOW:
-
-1. TodoWrite:
-   - Анализ competitors и user flows
-   - Context7 → "landing page design patterns"
-   - Wireframe (mobile → desktop)
-   - Hero section (responsive)
-   - Features section (grid layout)
-   - CTA optimization
-   - Accessibility audit
-   - Рефлексия
-
-2. Context7 research:
-   → "Tailwind responsive landing page"
-   → "React landing page components"
-   → Изучил hero section patterns
-
-3. Mobile-first design:
-   - Mobile (base):
-     * Single column
-     * Stacked hero image
-     * Vertical feature cards
-   - Tablet (md:):
-     * 2-column features grid
-     * Side-by-side hero
-   - Desktop (lg:):
-     * 3-column features
-     * Max-width container (max-w-7xl)
-
-4. Implementation structure:
-   - Hero: responsive flex (column → row)
-   - Features: grid (1 → 2 → 3 columns)
-   - CTA: full-width mobile, inline desktop
-   - Typography: text-sm → text-base → text-lg
-
-5. Performance:
-   - Lazy load images below fold
-   - Optimize hero image (WebP, srcset)
-   - Minimize CLS (fixed heights)
-
-✅ Результат: responsive, performant landing page
-```
-
 ## 🚫 Когда НЕ использовать
 
 **НЕ использовать UI/UX Design Agent для:**
